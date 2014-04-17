@@ -1,16 +1,16 @@
 SpiralRingdownSnr
 =================
 
-できること
-インスパイラルとリングダウンのパラメータを代入すれば、SNRを出力してくれる
+できること  
+インスパイラルとリングダウンのパラメータを代入すれば、SNRを出力してくれる  
 
 使い方
 ------
-SpiralorRingdownSnrをGHCiでロードした後、
-・インスパイラル
+SpiralorRingdownSnrをGHCiでロードした後、  
+・インスパイラル  
 snrInspiral 連星質量1[太陽質量] 連星質量2[太陽質量] 連星までの距離[Mpc] 使用する検出器 周波数cut\|
-off下限[Hz] 数値積分刻み幅
-の引数をそれぞれ代入
+off下限[Hz] 数値積分刻み幅  
+の引数をそれぞれ代入  
 
 例
 ```
@@ -38,9 +38,9 @@ Loading package storable-complex-0.2.1 ... linking ... done.
 Loading package hmatrix-0.15.2.1 ... linking ... done.
 fromList [11.27998843099513]
 ```
-・リングダウン
-snrRingdown BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器 周波数cutoff上限[Hz] 周波数cutoff下限[Hz] 数値積分刻み幅
-の引数をそれぞれ代入
+・リングダウン  
+snrRingdown BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器 周波数cutoff上限[Hz] 周波数cutoff下限[Hz] 数値積分刻み幅  
+の引数をそれぞれ代入  
 
 例
 ```
@@ -71,45 +71,45 @@ fromList [2130.2014493866377]
 
 HasKALモジュールとの変更点
 --------------------------
-・Detector.hs
-module HasKAL.DetectorUtils.Detector -> Detector
-
-・DetectorSensitivity.hs
-変更前
-module HasKAL.SpectrumUtils.DetectorSensitivity
-  (ifonoisepsd
-  ) where
-
-import Numeric.LinearAlgebra
-import HasKAL.DetectorUtils.Detector
-
-変更後
-module DetectorSensitivity
-       (ifonoisepsd
-       , aligoPsd
-       , kagraPsd
-       , advirgoPsd
-       ) where
-import Numeric.LinearAlgebra
-import Detector
-
-.cabalコンパイルがうまく行かなかったため、全て自分のワークスペースディレクトリの上で作業を行った。
-そのため、module、import設定をワークスペース上で使えるように書きなおした。
-
-プログラム説明
+・Detector.hs  
+module HasKAL.DetectorUtils.Detector -> Detector  
+  
+・DetectorSensitivity.hs  
+変更前  
+module HasKAL.SpectrumUtils.DetectorSensitivity  
+  (ifonoisepsd  
+  ) where  
+  
+import Numeric.LinearAlgebra  
+import HasKAL.DetectorUtils.Detector  
+  
+変更後  
+module DetectorSensitivity  
+       (ifonoisepsd  
+       , aligoPsd  
+       , kagraPsd  
+       , advirgoPsd  
+       ) where  
+import Numeric.LinearAlgebra  
+import Detector  
+  
+.cabalコンパイルがうまく行かなかったため、全て自分のワークスペースディレクトリの上で作業を行った。  
+そのため、module、import設定をワークスペース上で使えるように書きなおした。  
+  
+プログラム説明  
 --------------
-(以下で、~はInspiralもしくはRingdownを表す文字という意味で用いる)
-
-1.integrate~
-被積分関数をここで定義
-2.snr~Pow2
-単純な\sum dfを用いて被積分関数を数値積分する
-3.snr~
-2で積分したもののルートを取り、残りのパラメータを代入してSNRを出力する
-
-その他のプログラムの詳細は、SpiralorRingdownSnr.hsにコメントを付けておいたので、それを確認して下さい。
+(以下で、~はInspiralもしくはRingdownを表す文字という意味で用いる)  
+  
+1.integrate~  
+被積分関数をここで定義  
+2.snr~Pow2  
+単純な\sum dfを用いて被積分関数を数値積分する  
+3.snr~  
+2で積分したもののルートを取り、残りのパラメータを代入してSNRを出力する  
+  
+その他のプログラムの詳細は、SpiralorRingdownSnr.hsにコメントを付けておいたので、それを確認して下さい。  
 
 注意
 ---
-パラメータがどこか間違えている可能性があります。
-他のプログラム(譲原さんのc言語等)を用いて、出力結果があっているかどうかの確認をよろしくお願いします。
+パラメータがどこか間違えている可能性があります。  
+他のプログラム(譲原さんのc言語等)を用いて、出力結果があっているかどうかの確認をよろしくお願いします。  
