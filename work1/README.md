@@ -66,7 +66,7 @@ Loading package process-1.1.0.2 ... linking ... done.
 Loading package random-1.0.1.1 ... linking ... done.
 Loading package storable-complex-0.2.1 ... linking ... done.
 Loading package hmatrix-0.15.2.1 ... linking ... done.
-fromList [2130.2014493866377]
+fromList [6.478415907543071]
 ```
 
 HasKALモジュールとの変更点

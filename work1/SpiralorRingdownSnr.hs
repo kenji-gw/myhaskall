@@ -63,7 +63,7 @@ snrInspiral msol1 msol2 dmpc ifo flower df
  -- 引数
  -- BH質量[太陽質量] Kerr parameter 使用する検出器 周波数
 integratedRingdown :: Vector Double -> Vector Double -> Detector -> Vector Double -> Vector Double
-integratedRingdown msol a ifo fin = 1/(((((fqnr/q)**2)) + (4*(fin + fqnr)**2))*(ifonoisepsd ifo fin))
+integratedRingdown msol a ifo fin = 1/((((((fqnr/q)**2)) + (4*(fin + fqnr)**2))**2)*(ifonoisepsd ifo fin))
   where q = 2*(1 - a)**( - 9/20)
         fqnr = (1 - 0.63*(1 - a)**(3/10))/(2*pi*m)
           where m = (g*msol*(msolar)/(c**(3)))
