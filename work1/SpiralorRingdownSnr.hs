@@ -1,3 +1,17 @@
+ ---テストコード
+ -- snrInspiral
+ -- *SpiralorRingdownSnr> snrInspiral 1.4 1.4 280 KAGRA 30 0.05
+ -- fromList [8.168393032812842]
+
+ -- snrRingdown
+ -- *SpiralorRingdownSnr> snrRingdown 300 8697 0.9 0.01 0 KAGRA 4048 10 0.05
+ -- fromList [8.667669341182771] 
+
+ ---出典元
+ -- snrInspiral:P.Ajith et al. Phys.Rev.D77:104017 (2008) 式番号(B3) 注:LIGOとKAGRAとのSNRの定義の違いにより、(B3)に対し1/sqrt(2)倍の補正がかかっています。
+ -- snrRingdown:P.Ajith et al. Phys.Rev.D77:104017 (2008) 式番号(B10)
+
+
 module SpiralorRingdownSnr
        (snrInspiral
        ,snrRingdown
@@ -6,6 +20,7 @@ module SpiralorRingdownSnr
 import DetectorSensitivity
 import Detector
 import Numeric.LinearAlgebra
+
 
  -- 光速の定義
 c :: Vector Double
@@ -52,8 +67,8 @@ snrInspiral msol1 msol2 dmpc ifo flower df
     | msol1 <  0 =  error "mass 1: Why did you insert a minus number?"
     | msol2 <  0 =  error "mass 2 : Why did you insert a minus number?"
     | dmpc <  0 =  error "distance : Why did you insert a minus number?"
-    | otherwise = (cons*(allmass**(5/6))*((5*symmass/6)**(1/2))/(d * pi**(2/3)))*((snrInspiralPow2 msol1 msol2 ifo flower df)**(1/2))
-  where allmass = (msol1 + msol2)*(msolar)
+    | otherwise = ((2)**( - 0.5))*(cons*(allmass**(5/6))*((5*symmass/6)**(1/2))/(d * pi**(2/3)))*((snrInspiralPow2 msol1 msol2 ifo flower df)**(1/2))
+  where allmass = (msol1 + mOBsol2)*(msolar)
         symmass = msol1*msol2/((msol1 + msol2)**2)
         d = dmpc*(megapc)
         cons = c*((g/(c**3))**(5/6))
