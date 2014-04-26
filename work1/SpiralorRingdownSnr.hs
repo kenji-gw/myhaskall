@@ -68,7 +68,7 @@ snrInspiral msol1 msol2 dmpc ifo flower df
     | msol2 <  0 =  error "mass 2 : Why did you insert a minus number?"
     | dmpc <  0 =  error "distance : Why did you insert a minus number?"
     | otherwise = ((2)**( - 0.5))*(cons*(allmass**(5/6))*((5*symmass/6)**(1/2))/(d * pi**(2/3)))*((snrInspiralPow2 msol1 msol2 ifo flower df)**(1/2))
-  where allmass = (msol1 + mOBsol2)*(msolar)
+  where allmass = (msol1 + msol2)*(msolar)
         symmass = msol1*msol2/((msol1 + msol2)**2)
         d = dmpc*(megapc)
         cons = c*((g/(c**3))**(5/6))
