@@ -10,7 +10,7 @@ snrRingdown_tamesi.hs
 ------
 daq.hsをGHCiでロードした後、  
 ・リングダウン  
-snrRingdown BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器のFilePath 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
+dataRead BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器のFilePath 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
 の引数をそれぞれ代入  
 
 例
