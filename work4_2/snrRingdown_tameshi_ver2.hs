@@ -25,36 +25,36 @@ megapc :: Double
 megapc = 3.085677*(10**22)
 
 
- --- snrRingdown:リングダウンのSNRを定義する際、引数をリストでも良いようにする
- -- 引数
- -- BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位 使用する検出器のリストデータ(複数) 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
-snrRingdown :: [Double] ->  [Double] -> [Double] -> [Double] -> [Double] -> [[[Double]]] ->  [Double] -> [Double] -> [Double]
-snrRingdown msol dmpc a epsil phi ifo fupp flower = zipWith8' snrRingdownSingle msollist dmpclist alist epsillist philist ifolist fupplist flowerlist
-  where lengthmsol = length msol
-        lengthdmpc = length dmpc
-        lengtha = length a
-        lengthepsil = length epsil
-        lengthphi = length phi
-        lengthifo = length ifo
-        lengthfupp = length fupp
-        lengthflower = length flower
-        maxlengthofparam = maximum [lengthmsol,lengthdmpc,lengtha,lengthepsil,lengthphi,lengthifo,lengthfupp,lengthflower] -- 引数のリストの長さの内最も長いものの長さを出力
-        msollist = msol ++ (replicate (maxlengthofparam - (lengthmsol)) (last msol))
-        dmpclist = dmpc ++ (replicate (maxlengthofparam - (lengthdmpc)) (last dmpc))
-        alist = a ++ (replicate (maxlengthofparam - (lengtha)) (last a))
-        epsillist = epsil ++ (replicate (maxlengthofparam - (lengthepsil)) (last epsil))
-        philist = phi ++ (replicate (maxlengthofparam - (lengthphi)) (last phi))
-        ifolist = ifo ++ (replicate (maxlengthofparam - (lengthifo)) (last ifo))
-        fupplist = fupp ++ (replicate (maxlengthofparam - (lengthfupp)) (last fupp))
-        flowerlist = flower ++ (replicate (maxlengthofparam - (lengthflower)) (last flower)) -- 引数のリストを、最も長いものと同等になるように増やす
+--  --- snrRingdown:リングダウンのSNRを定義する際、引数をリストでも良いようにする
+--  -- 引数
+--  -- BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位 使用する検出器のリストデータ(複数) 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
+-- snrRingdown :: [Double] ->  [Double] -> [Double] -> [Double] -> [Double] -> [[(Double,Double)]] ->  [Double] -> [Double] -> [Double]
+-- snrRingdown msol dmpc a epsil phi ifo fupp flower = zipWith8' snrRingdownSingle msollist dmpclist alist epsillist philist ifolist fupplist flowerlist
+--   where lengthmsol = length msol
+--         lengthdmpc = length dmpc
+--         lengtha = length a
+--         lengthepsil = length epsil
+--         lengthphi = length phi
+--         lengthifo = length ifo
+--         lengthfupp = length fupp
+--         lengthflower = length flower
+--         maxlengthofparam = maximum [lengthmsol,lengthdmpc,lengtha,lengthepsil,lengthphi,lengthifo,lengthfupp,lengthflower] -- 引数のリストの長さの内最も長いものの長さを出力
+--         msollist = msol ++ (replicate (maxlengthofparam - (lengthmsol)) (last msol))
+--         dmpclist = dmpc ++ (replicate (maxlengthofparam - (lengthdmpc)) (last dmpc))
+--         alist = a ++ (replicate (maxlengthofparam - (lengtha)) (last a))
+--         epsillist = epsil ++ (replicate (maxlengthofparam - (lengthepsil)) (last epsil))
+--         philist = phi ++ (replicate (maxlengthofparam - (lengthphi)) (last phi))
+--         ifolist = ifo ++ (replicate (maxlengthofparam - (lengthifo)) (last ifo))
+--         fupplist = fupp ++ (replicate (maxlengthofparam - (lengthfupp)) (last fupp))
+--         flowerlist = flower ++ (replicate (maxlengthofparam - (lengthflower)) (last flower)) -- 引数のリストを、最も長いものと同等になるように増やす
 
 
 
- --- snrRingdownSingle:リングダウンのSNRを定義する際の入力データのエラーを出力する
+ --- snrRingdown:リングダウンのSNRを定義する際の入力データのエラーを出力する
  -- 引数
  -- BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器のリストデータ 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
-snrRingdownSingle :: Double ->  Double ->  Double -> Double -> Double ->  [[Double]] ->  Double -> Double -> Double
-snrRingdownSingle msol dmpc a epsil phi ifo fupp flower
+snrRingdown :: Double ->  Double ->  Double -> Double -> Double ->  [(Double,Double)] ->  Double -> Double -> Double
+snrRingdown msol dmpc a epsil phi ifo fupp flower
     | msol <  0 =  error "mass : Why did you insert a minus number?"
     | dmpc <  0 =  error "distance : Why did you insert a minus number?"
     | a <  0 =  error "Kerr parameter : Why did you insert a minus number?"
@@ -66,9 +66,10 @@ snrRingdownSingle msol dmpc a epsil phi ifo fupp flower
  --- filestream:周波数、パワースペクトルデータを整形し、SNRを求め、値をIOで返す。詳しくはプログラム中のコメントを参照
  -- 引数
  -- BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器のリストデータ 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
-filestream :: Double -> Double -> Double -> Double -> Double -> [[Double]] -> Double -> Double -> Double
+filestream :: Double -> Double -> Double -> Double -> Double -> [(Double,Double)] -> Double -> Double -> Double
 filestream msol dmpc a epsil phi ifo fupp flower = getsnrRingdown
-  where readnumwithfrequencycut = updowncut ifo flower fupp -- データの周波数を必要な分だけ取り出す(詳しくはupdowncut関数を参照)
+  where ifonontupl = map invtuplify2 ifo
+        readnumwithfrequencycut = updowncut ifonontupl flower fupp -- データの周波数を必要な分だけ取り出す(詳しくはupdowncut関数を参照)
         numfreq = map head readnumwithfrequencycut -- 周波数データのみのリストを作成
         numnois = map last readnumwithfrequencycut -- パワースペクトルのみのリストを作成
         vectnumhead = fromList numfreq -- 周波数データをリストからVectorに変換
@@ -136,3 +137,7 @@ zipWith8' _ _ _ _ _ _ [] _ _ = []
 zipWith8' _ _ _ _ _ _ _ [] _ = []
 zipWith8' _ _ _ _ _ _ _ _ [] = []
 zipWith8' f (x:xs) (y:ys) (z:zs) (j:js) (k:ks) (l:ls) (m:ms) (n:ns) = f x y z j k l m n : zipWith8' f xs ys zs js ks ls ms ns
+
+
+invtuplify2 ::  (a,a) ->  [a]
+invtuplify2 (x,y) = [x,y]
