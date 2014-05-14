@@ -54,14 +54,14 @@ megapc = 3.085677*(10**22)
  -- 引数
  -- BH質量[太陽質量] BHまでの距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器のリストデータ 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]
 snrRingdown :: Double ->  Double ->  Double -> Double -> Double ->  [(Double,Double)] ->  Double -> Double -> Double
-snrRingdown msol dmpc a epsil phi ifo fupp flower
-    | msol <  0 =  error "mass : Why did you insert a minus number?"
-    | dmpc <  0 =  error "distance : Why did you insert a minus number?"
-    | a <  0 =  error "Kerr parameter : Why did you insert a minus number?"
-    | epsil <  0 =  error "mass defect : Why did you insert a minus number?"
-    | fupp <  0 =  error "upper frequency : Why did you insert a minus number?"
-    | flower <  0 =  error "lower frequency : Why did you insert a minus number?"
-    | otherwise = filestream msol dmpc a epsil phi ifo fupp flower
+snrRingdown msol dmpc a epsil phi ifo fupp flower = filestream msol dmpc a epsil phi ifo fupp flower
+    -- | msol <  0 =  error "mass : Why did you insert a minus number?"
+    -- | dmpc <  0 =  error "distance : Why did you insert a minus number?"
+    -- | a <  0 =  error "Kerr parameter : Why did you insert a minus number?"
+    -- | epsil <  0 =  error "mass defect : Why did you insert a minus number?"
+    -- | fupp <  0 =  error "upper frequency : Why did you insert a minus number?"
+    -- | flower <  0 =  error "lower frequency : Why did you insert a minus number?"
+    -- | otherwise = filestream msol dmpc a epsil phi ifo fupp flower
 
  --- filestream:周波数、パワースペクトルデータを整形し、SNRを求め、値をIOで返す。詳しくはプログラム中のコメントを参照
  -- 引数
@@ -107,21 +107,21 @@ snrRingdownculc msol dmpc a epsil snrRingdownPow2 = ((((10*epsil*m*fqnr)/(q*pi*(
 --- updownnonerrorcut:指定した周波数バンドのみのデータを使用するよう、周波数の上限、下限を引数に取りその分のデータのみを取得する
  -- 引数
  -- 検出器の周波数及びノイズパワースペクトルデータのリスト 周波数カットオフ下限 周波数カットオフ上限
-updownnonerrorcut :: [[Double]] -> Double -> Double -> [[Double]]
-updownnonerrorcut xs flower fupp
-  | head (head xs) < flower = updownnonerrorcut (tail xs) flower fupp
-  | head (last xs) > fupp = updownnonerrorcut (init xs) flower fupp
+updowncut :: [[Double]] -> Double -> Double -> [[Double]]
+updowncut xs flower fupp
+  | head (head xs) < flower = updowncut (tail xs) flower fupp
+  | head (last xs) > fupp = updowncut (init xs) flower fupp
   | otherwise = xs
 
 
---- updowncut:updownnonerrrorcutのエラー出力;指定したカットオフよりも元データの周波数が足りなかった場合にエラーを出力する
- -- 引数
- -- 検出器の周波数及びノイズパワースペクトルデータのリスト 周波数カットオフ下限 周波数カットオフ上限
-updowncut :: [[Double]] -> Double -> Double -> [[Double]]
-updowncut xs flower fupp
-  | head (head xs) >=  flower = error "The input lower frequency is lower than the lower frequency of the detector noise power spectrum data"
-  | head (last xs) <=  fupp = error "The input upper frequency is larger than the upper frequency of the detector noise power spectrum data"
-  | otherwise = updownnonerrorcut xs flower fupp
+-- --- updowncut:updownnonerrrorcutのエラー出力;指定したカットオフよりも元データの周波数が足りなかった場合にエラーを出力する
+--  -- 引数
+--  -- 検出器の周波数及びノイズパワースペクトルデータのリスト 周波数カットオフ下限 周波数カットオフ上限
+-- updowncut :: [[Double]] -> Double -> Double -> [[Double]]
+-- updowncut xs flower fupp
+--   | head (head xs) >=  flower = error "The input lower frequency is lower than the lower frequency of the detector noise power spectrum data"
+--   | head (last xs) <=  fupp = error "The input upper frequency is larger than the upper frequency of the detector noise power spectrum data"
+--   | otherwise = updownnonerrorcut xs flower fupp
 
 
 --- wipWith8':zipWithの8変数バーション
