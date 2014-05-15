@@ -28,12 +28,12 @@ distRingdown BH質量[太陽質量] 距離[Mpc] Kerr parameter 質量欠損比�
 
 例
 ```
-Prelude> :l daq
-[1 of 3] Compiling InspiralRingdownDistance ( InspiralRingdownDistance.hs, interpreted )
-[2 of 3] Compiling InspiralRingdownSnr ( InspiralRingdownSnr.hs, interpreted )
+*Main> distRingdowPrelude> :l daq.hs
+[1 of 3] Compiling InspiralRingdownDistanceQuanta ( InspiralRingdownDistanceQuanta.hs, interpreted )
+[2 of 3] Compiling InspiralRingdownSnrQuanta ( InspiralRingdownSnrQuanta.hs, interpreted )
 [3 of 3] Compiling Main             ( daq.hs, interpreted )
-Ok, modules loaded: InspiralRingdownSnr, InspiralRingdownDistance, Main.
-*Main> distInspiralCoreCulculation 1.4 1.4 8 "kagraPsd.dat" 30
+Ok, modules loaded: InspiralRingdownSnrQuanta, InspiralRingdownDistanceQuanta, Main.
+*Main> snrInspiralCulculation 1.4 1.4 280 "kagraPsd.dat"
 Loading package array-0.4.0.1 ... linking ... done.
 Loading package deepseq-1.3.0.1 ... linking ... done.
 Loading package primitive-0.5.0.1 ... linking ... done.
@@ -50,19 +50,19 @@ Loading package process-1.1.0.2 ... linking ... done.
 Loading package random-1.0.1.1 ... linking ... done.
 Loading package storable-complex-0.2.1 ... linking ... done.
 Loading package hmatrix-0.15.2.1 ... linking ... done.
-286.01470379660367
-*Main> distInspiralCulculation 1.4 1.4 8 "kagraPsd.dat"
-286.01470379660367
-*Main> distRingdownCoreCulculation 300 8 0.9 0.01 0 "kagraPsd.dat" 2048 10
-9422.839968026909
-*Main> distRingdownCulculation  300 8 0.9 0.01 0 "kagraPsd.dat"
-9422.819838719484
-*Main> snrInspiralCoreCulculation 1.4 1.4 280 "kagraPsd.dat" 30
-8.171848679902961
-*Main> snrInspiralCulculation 1.4 1.4 280 "kagraPsd.dat"
-8.171848679902961
-*Main> snrRingdownCoreCulculation 300 8697 0.9 0.01 0 "kagraPsd.dat" 2048 30
-8.667650765753233
-*Main> snrRingdownCulculation 300 8697 0.9 0.01 0 "kagraPsd.dat"
-8.667650765753233
+8.23304118549503
+*Main> snrInspiralCoreCulculation 1.4 1.4 280 "kagraPsd.dat" 10
+8.23304118549503
+*Main> snrRingdownCulculation 300 15840 "kagraPsd.dat"
+8.00018224854012
+*Main> snrRingdownCoreCulculation 300 15840 0.98 0.03 0.0 "kagraPsd.dat" 2048 10
+8.00018224854012
+*Main> distInspiralCulculation 1.4 1.4 "kagraPsd.dat"
+288.156441492326
+*Main> distInspiralCoreCulculation 1.4 1.4 8 "kagraPsd.dat" 10
+288.156441492326
+*Main> distRingdownCulculation 300 "kagraPsd.dat"
+15840.358769466673
+*Main> distRingdownCoreCulculation 300 8 0.98 0.03 0.0 "kagraPsd.dat" 2048 10
+15840.360852109441
 ```
