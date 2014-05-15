@@ -12,11 +12,11 @@ daq.hs(ここでは、テキストデータにある離散データを読み込�
 -distInspiralCore  
 distInspiralCoreCulculation 連星質量1[太陽質量] 連星質量2[太陽質量] SNR 使用する検出器 周波数cutoff下限[Hz]  
 -distInspiral  
-distInspiral 連星質量1[太陽質量] 連星質量2[太陽質量] SNR 使用する検出器  
+distInspiral 連星質量1[太陽質量] 連星質量2[太陽質量] 使用する検出器  
 -distRingdownCore  
 distRingdownCoreCulculation BH質量[太陽質量] SNR Kerr parameter 質量欠損比率 初期位相 使用する検出器 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]    
 -distRingdown  
-distRingdown BH質量[太陽質量] SNR Kerr parameter 質量欠損比率 初期位相 使用する検出器  
+distRingdown BH質量[太陽質量] 使用する検出器  
 -snrInspiralCore  
 snrInspiralCoreCulculation 連星質量1[太陽質量] 連星質量2[太陽質量] 距離[Mpc] 使用する検出器 周波数cutoff下限[Hz]  
 -snrInspiral  
@@ -24,7 +24,7 @@ snrInspiral 連星質量1[太陽質量] 連星質量2[太陽質量] 距離[Mpc] 
 -snrRingdownCore  
 snrRingdownCoreCulculation BH質量[太陽質量] 距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器 周波数cutoff上限[Hz] 周波数cutoff下限[Hz]    
 -snrRingdown  
-distRingdown BH質量[太陽質量] 距離[Mpc] Kerr parameter 質量欠損比率 初期位相 使用する検出器  
+distRingdown BH質量[太陽質量] 距離[Mpc] 使用する検出器  
 
 例
 ```
